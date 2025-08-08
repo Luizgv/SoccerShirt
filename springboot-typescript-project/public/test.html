@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste do Frontend</title>
+</head>
+<body>
+    <h1>Teste do Sistema</h1>
+    <div id="result"></div>
+    
+    <script>
+        async function testLogin() {
+            try {
+                console.log('Testando login...');
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'gustavo.nscto@gmail.com',
+                        password: '1234'
+                    })
+                });
+
+                const data = await response.json();
+                console.log('Response:', data);
+                
+                if (response.ok) {
+                    document.getElementById('result').innerHTML = `
+                        <h2>✅ Login funcionando!</h2>
+                        <p><strong>Token:</strong> ${data.token.substring(0, 20)}...</p>
+                        <p><strong>Usuário:</strong> ${data.user.name}</p>
+                        <p><strong>Grupo:</strong> ${data.user.group}</p>
+                    `;
+                    
+                    // Testar produtos
+                    await testProducts(data.token);
+                } else {
+                    document.getElementById('result').innerHTML = `
+                        <h2>❌ Erro no login</h2>
+                        <p>Status: ${response.status}</p>
+                        <p>Erro: ${data.message || 'Erro desconhecido'}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('result').innerHTML = `
+                    <h2>❌ Erro de conexão</h2>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+
+        async function testProducts(token) {
+            try {
+                console.log('Testando produtos...');
+                const response = await fetch('/api/products', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const data = await response.json();
+                console.log('Products response:', data);
+                
+                if (response.ok) {
+                    document.getElementById('result').innerHTML += `
+                        <h2>✅ Produtos funcionando!</h2>
+                        <p><strong>Total de produtos:</strong> ${data.products.length}</p>
+                        <ul>
+                            ${data.products.map(p => `<li>${p.name} - R$ ${p.price}</li>`).join('')}
+                        </ul>
+                    `;
+                } else {
+                    document.getElementById('result').innerHTML += `
+                        <h2>❌ Erro nos produtos</h2>
+                        <p>Status: ${response.status}</p>
+                        <p>Erro: ${data.message || 'Erro desconhecido'}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erro produtos:', error);
+                document.getElementById('result').innerHTML += `
+                    <h2>❌ Erro ao carregar produtos</h2>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+
+        // Executar teste automaticamente
+        window.addEventListener('load', testLogin);
+    </script>
+</body>
+</html>
