@@ -109,6 +109,23 @@
             width: auto;
         }
 
+        .btn-logout {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-logout:hover {
+            background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
         .user-info {
             background: #f8f9fa;
             padding: 15px;
@@ -376,9 +393,9 @@
 
             <!-- Navigation -->
             <div class="navigation">
-                <button class="nav-btn active" onclick="showSection('products', this)">📦 Produtos</button>
-                <button class="nav-btn" onclick="showSection('users', this)" id="usersNavBtn" style="display: none;">👥 Usuários</button>
-                <button class="nav-btn" onclick="logout()">🚪 Sair</button>
+                <button class="nav-btn active" onclick="redirectToProducts()">📦 Produtos</button>
+                <button class="nav-btn" onclick="redirectToUsers()" id="usersNavBtn" style="display: none;">👥 Usuários</button>
+                <button class="nav-btn btn-logout" onclick="logout()">🚪 Sair</button>
             </div>
 
             <!-- Products Section -->

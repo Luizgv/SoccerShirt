@@ -36,4 +36,14 @@ export class AuthController {
       user: result.user,
     };
   }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  async logout() {
+    // Em uma implementação real, aqui poderíamos invalidar o token no servidor
+    // Por enquanto, apenas retornamos uma resposta de sucesso
+    return {
+      message: 'Logout realizado com sucesso',
+    };
+  }
 }

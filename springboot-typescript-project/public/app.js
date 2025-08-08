@@ -48,17 +48,65 @@ async function login(email, password) {
     }
 }
 
-function logout() {
+async function logout() {
     console.log('logout called');
+    
+    // Confirmar logout
+    if (!confirm('Tem certeza que deseja sair do sistema?')) {
+        return;
+    }
+    
     try {
+        // Chamar a API de logout
+        if (authToken) {
+            try {
+                await fetch(`${API_BASE}/auth/logout`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+            } catch (error) {
+                console.error('Erro ao chamar API de logout:', error);
+                // Continue com o logout local mesmo se a API falhar
+            }
+        }
+        
+        // Limpar dados locais
         authToken = null;
         currentUser = null;
         localStorage.removeItem('authToken');
         localStorage.removeItem('currentUser');
-        console.log('Calling showLogin...');
+        
+        // Mostrar tela de login
         showLogin();
+        
+        // Mostrar mensagem de sucesso
+        showAlert('loginAlert', 'Logout realizado com sucesso!', 'success');
     } catch (error) {
         console.error('Error in logout:', error);
+        // Em caso de erro, ainda assim mostrar tela de login
+        showLogin();
+    }
+}
+
+// Navigation functions
+function redirectToProducts() {
+    console.log('redirectToProducts called');
+    console.log('Current user:', currentUser);
+    console.log('Auth token:', authToken);
+    showSection('products');
+}
+
+function redirectToUsers() {
+    console.log('redirectToUsers called');
+    console.log('Current user:', currentUser);
+    // Verificar se o usuário tem permissão para acessar usuários
+    if (currentUser && currentUser.group === 'ADMINISTRADOR') {
+        showSection('users');
+    } else {
+        alert('Acesso negado. Apenas administradores podem acessar a gestão de usuários.');
     }
 }
 
@@ -476,6 +524,8 @@ window.onclick = function(event) {
 // Make functions available globally (fix for onclick handlers)
 window.showSection = showSection;
 window.logout = logout;
+window.redirectToProducts = redirectToProducts;
+window.redirectToUsers = redirectToUsers;
 window.showLogin = showLogin;
 window.showDashboard = showDashboard;
 window.showCreateUserModal = showCreateUserModal;
