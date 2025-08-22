@@ -1,0 +1,140 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Camisa Real Madrid Home 24/25",
+      "team": "Real Madrid",
+      "league": "La Liga",
+      "season": "2024/25",
+      "description": "Camisa oficial do Real Madrid para a temporada 2024/25. Tradicional branca com detalhes em dourado.",
+      "basePrice": 299.90,
+      "category": "HOME",
+      "isAvailable": true,
+      "availableSizes": [
+        {
+          "size": "S",
+          "priceModifier": 0.00,
+          "stockQuantity": 10,
+          "isAvailable": true,
+          "finalPrice": 299.90
+        },
+        {
+          "size": "M",
+          "priceModifier": 0.00,
+          "stockQuantity": 15,
+          "isAvailable": true,
+          "finalPrice": 299.90
+        },
+        {
+          "size": "L",
+          "priceModifier": 0.00,
+          "stockQuantity": 12,
+          "isAvailable": true,
+          "finalPrice": 299.90
+        },
+        {
+          "size": "XL",
+          "priceModifier": 10.00,
+          "stockQuantity": 8,
+          "isAvailable": true,
+          "finalPrice": 309.90
+        },
+        {
+          "size": "XXL",
+          "priceModifier": 20.00,
+          "stockQuantity": 5,
+          "isAvailable": true,
+          "finalPrice": 319.90
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Camisa Barcelona Home 24/25",
+      "team": "FC Barcelona",
+      "league": "La Liga",
+      "season": "2024/25",
+      "description": "Camisa oficial do Barcelona para a temporada 2024/25. Tradicional blaugrana com listras verticais.",
+      "basePrice": 289.90,
+      "category": "HOME",
+      "isAvailable": true,
+      "availableSizes": [
+        {
+          "size": "S",
+          "priceModifier": 0.00,
+          "stockQuantity": 10,
+          "isAvailable": true,
+          "finalPrice": 289.90
+        },
+        {
+          "size": "M",
+          "priceModifier": 0.00,
+          "stockQuantity": 15,
+          "isAvailable": true,
+          "finalPrice": 289.90
+        },
+        {
+          "size": "L",
+          "priceModifier": 0.00,
+          "stockQuantity": 12,
+          "isAvailable": true,
+          "finalPrice": 289.90
+        },
+        {
+          "size": "XL",
+          "priceModifier": 10.00,
+          "stockQuantity": 8,
+          "isAvailable": true,
+          "finalPrice": 299.90
+        },
+        {
+          "size": "XXL",
+          "priceModifier": 20.00,
+          "stockQuantity": 5,
+          "isAvailable": true,
+          "finalPrice": 309.90
+        }
+      ]
+    }
+  ],
+  "categories": [
+    { "value": "HOME", "label": "Camisa Casa" },
+    { "value": "AWAY", "label": "Camisa Visitante" },
+    { "value": "THIRD", "label": "Terceira Camisa" },
+    { "value": "GOALKEEPER", "label": "Camisa de Goleiro" },
+    { "value": "RETRO", "label": "Camisa Retrô" },
+    { "value": "TRAINING", "label": "Camisa de Treino" }
+  ],
+  "sizes": [
+    { "value": "XS", "label": "Extra Small" },
+    { "value": "S", "label": "Small" },
+    { "value": "M", "label": "Medium" },
+    { "value": "L", "label": "Large" },
+    { "value": "XL", "label": "Extra Large" },
+    { "value": "XXL", "label": "Double Extra Large" },
+    { "value": "XXXL", "label": "Triple Extra Large" }
+  ],
+  "teams": [
+    "Real Madrid",
+    "FC Barcelona", 
+    "Manchester United",
+    "Arsenal",
+    "Paris Saint-Germain",
+    "Bayern Munich",
+    "Flamengo",
+    "Palmeiras",
+    "Liverpool",
+    "Chelsea",
+    "Juventus",
+    "AC Milan"
+  ],
+  "leagues": [
+    "La Liga",
+    "Premier League", 
+    "Ligue 1",
+    "Bundesliga",
+    "Brasileirão",
+    "Serie A",
+    "Champions League"
+  ]
+}
