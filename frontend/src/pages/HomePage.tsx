@@ -30,23 +30,17 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-surface">
       {/* Hero Section */}
-      <section className="bg-primary text-white py-16">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+      <section className="hero-section-clean">
+        <div className="hero-background-clean"></div>
+        <div className="hero-overlay-clean"></div>
+        <div className="container relative z-10">
+          <div className="hero-content-clean">
+            <h1 className="hero-title-clean">
               As Melhores Camisas de Futebol
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8">
+            <p className="hero-subtitle-clean">
               Encontre camisas oficiais dos seus times favoritos com os melhores preços
             </p>
-            <div className="flex gap-4 justify-center">
-              <Link to="/catalog" className="btn btn-primary bg-white text-primary hover:bg-gray-100">
-                Ver Catálogo
-              </Link>
-              <Link to="/categories" className="btn btn-outline border-white text-white hover:bg-white hover:text-primary">
-                Categorias
-              </Link>
-            </div>
           </div>
         </div>
       </section>
