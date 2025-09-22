@@ -42,12 +42,23 @@ header {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-header input {
-  flex: 1;
+.search-bar {
+  flex: 0 1 400px;
+  max-width: 400px;
+  min-width: 200px;
   padding: 10px 16px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background: var(--light-gray);
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  background: var(--white);
+  box-shadow: 0 2px 8px rgba(0,102,204,0.1);
 }
 
 .topbar-icons {
@@ -1225,6 +1236,13 @@ body:has(.register-container) {
 /* ================================
    RESPONSIVIDADE
    ================================ */
+@media (max-width: 1024px) {
+  .search-bar {
+    max-width: 300px;
+    min-width: 180px;
+  }
+}
+
 @media (max-width: 768px) {
   .products-grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1258,9 +1276,11 @@ body:has(.register-container) {
     gap: 12px;
   }
   
-  header input {
+  .search-bar {
     order: 3;
-    flex-basis: 100%;
+    flex: 1 1 100%;
+    max-width: none;
+    min-width: auto;
   }
   
   .login-container, .register-container {
