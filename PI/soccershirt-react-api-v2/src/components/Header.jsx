@@ -24,7 +24,7 @@ export default function Header(){
   }, [])
   return (
     <header>
-      <Link to="/" style={{fontWeight:800, fontSize:22}}>LOGO</Link>
+      <Link to="/" style={{fontWeight:800, fontSize:22}}>Soccer Shirt</Link>
       <input placeholder="Pesquise Produtos" className="search-bar" />
       <div className="topbar-icons">
         <Link to="/favorites" className="header-link">♡</Link>

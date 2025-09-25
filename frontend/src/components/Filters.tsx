@@ -30,6 +30,7 @@ const Filters: React.FC<FiltersProps> = ({ onFilterChange, loading = false }) =>
   };
 
   const hasActiveFilters = Object.values(filters).some(value => value !== undefined && value !== '');
+  const activeFiltersCount = Object.values(filters).filter(value => value !== undefined && value !== '').length;
 
   const categoryOptions = [
     { value: '', label: 'Todas as categorias' },
@@ -63,15 +64,32 @@ const Filters: React.FC<FiltersProps> = ({ onFilterChange, loading = false }) =>
     <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-text-primary">Filtros</h2>
-        {hasActiveFilters && (
+        <div className="flex gap-2">
+          {/* Botão de teste para aplicar filtros rapidamente */}
+          {!hasActiveFilters && (
+            <button
+              onClick={() => handleFilterChange({ category: 'HOME', team: 'Real Madrid' })}
+              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 rounded-lg transition-all duration-200"
+              disabled={loading}
+            >
+              <span>⚡</span>
+              Aplicar filtros teste
+            </button>
+          )}
+          
           <button
             onClick={clearFilters}
-            className="text-sm text-secondary hover:text-primary transition-colors"
-            disabled={loading}
+            className={`inline-flex items-center gap-2 px-3 py-1.5 text-sm border rounded-lg transition-all duration-200 ${
+              hasActiveFilters 
+                ? 'bg-surface hover:bg-border text-secondary hover:text-primary border-border hover:shadow-sm' 
+                : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+            }`}
+            disabled={loading || !hasActiveFilters}
           >
-            Limpar filtros
+            <span>🗑️</span>
+            Limpar filtros {hasActiveFilters ? `(${activeFiltersCount})` : ''}
           </button>
-        )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -158,7 +176,16 @@ const Filters: React.FC<FiltersProps> = ({ onFilterChange, loading = false }) =>
       {/* Active filters display */}
       {hasActiveFilters && (
         <div className="mt-4 pt-4 border-t">
-          <p className="text-sm text-secondary mb-2">Filtros ativos:</p>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-secondary">Filtros ativos:</p>
+            <button
+              onClick={clearFilters}
+              className="text-xs text-secondary hover:text-primary underline transition-colors"
+              disabled={loading}
+            >
+              Limpar todos
+            </button>
+          </div>
           <div className="flex flex-wrap gap-2">
             {filters.category && (
               <span className="inline-flex items-center gap-1 bg-surface px-2 py-1 rounded text-sm">

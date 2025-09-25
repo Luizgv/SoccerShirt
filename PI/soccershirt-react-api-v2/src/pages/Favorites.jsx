@@ -39,15 +39,15 @@ export default function Favorites(){
         </div>
       ) : (
         <div className="favorites-grid">
-          {items.map(f => (
-            <div className="favorite-card" key={f.id}>
+          {items.map(product => (
+            <div className="favorite-card" key={product.id}>
               <div className="favorite-image-container">
-                <Link to={`/products/${f.product.id}`}>
-                  <img src={f.product.imageUrl} alt={f.product.name} className="favorite-image"/>
+                <Link to={`/products/${product.id}`}>
+                  <img src={product.imageUrl} alt={product.name} className="favorite-image"/>
                 </Link>
                 <button 
                   className="remove-favorite-btn" 
-                  onClick={() => removeFromFavorites(f.product.id)}
+                  onClick={() => removeFromFavorites(product.id)}
                   aria-label="Remover dos favoritos"
                 >
                   ❤️
@@ -55,17 +55,17 @@ export default function Favorites(){
               </div>
               
               <div className="favorite-info">
-                <div className="favorite-category">Camisa {f.product.team}</div>
-                <div className="favorite-name">{f.product.name}</div>
+                <div className="favorite-category">Camisa {product.team}</div>
+                <div className="favorite-name">{product.name}</div>
                 <div className="favorite-rating">★★★★★ (198 Avaliações)</div>
                 <div className="favorite-price">
-                  <span className="favorite-current-price">R$ {Number(f.product.price).toFixed(2)}</span>
-                  <span className="favorite-old-price">R$ {Number(f.product.oldPrice).toFixed(2)}</span>
+                  <span className="favorite-current-price">R$ {Number(product.price).toFixed(2)}</span>
+                  <span className="favorite-old-price">R$ {Number(product.oldPrice).toFixed(2)}</span>
                 </div>
                 
                 <button 
                   className="add-to-cart-from-favorites" 
-                  onClick={() => handleAddToCart(f.product.id)}
+                  onClick={() => handleAddToCart(product.id)}
                 >
                   🛒 Adicionar ao Carrinho
                 </button>

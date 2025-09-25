@@ -16,7 +16,7 @@ const Header: React.FC = () => {
           {/* Logo Section */}
           <Link to="/" className="header-logo">
             <div className="logo-icon">
-              <span>⚽</span>
+              <img src="./images/logo.png" alt="Soccer Shirt Logo" className="logo-image" />
             </div>
             <div className="logo-text">
               <h1>Soccer Shirt</h1>

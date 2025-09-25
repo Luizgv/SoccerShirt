@@ -18,8 +18,10 @@ export default function Home(){
   const addToFavorites = async (productId) => {
     try {
       await api.favToggle(productId)
+      alert('Produto adicionado aos favoritos! ❤️')
     } catch (error) {
       console.error('Erro ao favoritar:', error)
+      alert('Erro ao adicionar aos favoritos. Tente novamente.')
     }
   }
 
@@ -56,6 +58,29 @@ export default function Home(){
           <option value="price_asc">Preço: menor → maior</option>
           <option value="price_desc">Preço: maior → menor</option>
         </select>
+        
+        <button 
+          onClick={() => {
+            setCategory('')
+            setSort('relevance')
+            setPage(0)
+          }}
+          className="clear-filters-btn"
+          style={{
+            padding: '8px 16px',
+            backgroundColor: '#f1f5f9',
+            border: '1px solid #d1d5db',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            color: '#374151',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}
+        >
+          🗑️ Limpar filtros
+        </button>
       </div>
       
       <div className="products-grid">

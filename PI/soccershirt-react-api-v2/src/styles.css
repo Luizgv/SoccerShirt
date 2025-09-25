@@ -118,8 +118,8 @@ header {
    ================================ */
 .login-btn-header {
   background: var(--black);
-  color: var(--white);
-  padding: 8px 16px;
+  color: #ffffff !important;
+  padding: 10px 20px;
   border-radius: 8px;
   text-decoration: none;
   font-size: 14px;
@@ -761,13 +761,17 @@ body:has(.register-container) {
 }
 
 .breadcrumb a {
-  color: var(--primary-blue);
+  color: var(--text-light);
   text-decoration: none;
   font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.3s ease;
 }
 
 .breadcrumb a:hover {
-  text-decoration: underline;
+  color: var(--black);
 }
 
 .product-details {

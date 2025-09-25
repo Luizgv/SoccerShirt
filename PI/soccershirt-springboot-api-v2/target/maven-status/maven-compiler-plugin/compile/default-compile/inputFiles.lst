@@ -4,6 +4,7 @@ C:\Users\MEDCOF\Downloads\PI-20250922T174845Z-1-001\PI\soccershirt-springboot-ap
 C:\Users\MEDCOF\Downloads\PI-20250922T174845Z-1-001\PI\soccershirt-springboot-api-v2\src\main\java\com\soccershirt\controller\AuthRestController.java
 C:\Users\MEDCOF\Downloads\PI-20250922T174845Z-1-001\PI\soccershirt-springboot-api-v2\src\main\java\com\soccershirt\controller\CartRestController.java
 C:\Users\MEDCOF\Downloads\PI-20250922T174845Z-1-001\PI\soccershirt-springboot-api-v2\src\main\java\com\soccershirt\controller\CouponRestController.java
+C:\Users\MEDCOF\Downloads\PI-20250922T174845Z-1-001\PI\soccershirt-springboot-api-v2\src\main\java\com\soccershirt\controller\FavoriteRestController.java
 C:\Users\MEDCOF\Downloads\PI-20250922T174845Z-1-001\PI\soccershirt-springboot-api-v2\src\main\java\com\soccershirt\controller\ProductRestController.java
 C:\Users\MEDCOF\Downloads\PI-20250922T174845Z-1-001\PI\soccershirt-springboot-api-v2\src\main\java\com\soccershirt\dto\CheckoutDTO.java
 C:\Users\MEDCOF\Downloads\PI-20250922T174845Z-1-001\PI\soccershirt-springboot-api-v2\src\main\java\com\soccershirt\dto\LoginDTO.java

@@ -6,6 +6,7 @@ com\soccershirt\model\Favorite$FavoriteBuilder.class
 com\soccershirt\controller\AuthRestController.class
 com\soccershirt\model\Favorite.class
 com\soccershirt\config\DataLoader.class
+com\soccershirt\controller\FavoriteRestController.class
 com\soccershirt\dto\TokenDTO.class
 com\soccershirt\model\Coupon.class
 com\soccershirt\repository\FavoriteRepository.class
