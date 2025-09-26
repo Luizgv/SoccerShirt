@@ -1,13 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useCart } from '../contexts/CartContext'
 export default function Header(){
   const { user, logout } = useAuth()
   const { cartCount } = useCart()
   const nav = useNavigate()
+  const location = useLocation()
   const [showUserMenu, setShowUserMenu] = useState(false)
   const userMenuRef = useRef(null)
+
+  // Função para verificar se uma rota está ativa
+  const isActive = (path) => {
+    if (path === '/') {
+      return location.pathname === '/' && !location.search
+    }
+    return location.pathname === path
+  }
+
+  // Função para verificar se uma categoria está ativa
+  const isCategoryActive = (category) => {
+    const urlParams = new URLSearchParams(location.search)
+    return location.pathname === '/' && urlParams.get('category') === category
+  }
 
   // Fechar dropdown ao clicar fora
   useEffect(() => {
@@ -23,21 +38,82 @@ export default function Header(){
     }
   }, [])
   return (
-    <header>
-      <Link to="/" style={{fontWeight:800, fontSize:22}}>Soccer Shirt</Link>
-      <input placeholder="Pesquise Produtos" className="search-bar" />
-      <div className="topbar-icons">
-        <Link to="/about" className="header-link">Sobre Nós</Link>
-        <Link to="/favorites" className="header-link">♡</Link>
-        <Link to="/cart" className="header-link cart-icon">
-          🛒
-          {user && cartCount > 0 && (
-            <span className="cart-badge">{cartCount}</span>
-          )}
-        </Link>
-        {!user ? (
-          <Link to="/login" className="login-btn-header">Entrar</Link>
-        ) : (
+    <header className="modern-header">
+      <div className="header-container">
+        {/* Logo Section */}
+        <div className="logo-section">
+          <Link to="/" className="logo-link">
+            <div className="logo-icon">⚽</div>
+            <span className="logo-text">Soccer Shirt</span>
+          </Link>
+        </div>
+
+        {/* Search Section */}
+        <div className="search-section">
+          <div className="search-container">
+            <div className="search-icon">🔍</div>
+            <input 
+              placeholder="Pesquise por times, produtos..." 
+              className="search-input" 
+            />
+          </div>
+        </div>
+
+        {/* Navigation Section */}
+        <div className="nav-section">
+          <div className="category-nav">
+            <Link 
+              to="/?category=Nacional" 
+              className={`category-btn ${isCategoryActive('Nacional') ? 'category-active' : ''}`}
+            >
+              <span className="category-icon">🇧🇷</span>
+              Nacionais
+            </Link>
+            <Link 
+              to="/?category=Internacional" 
+              className={`category-btn ${isCategoryActive('Internacional') ? 'category-active' : ''}`}
+            >
+              <span className="category-icon">🌍</span>
+              Internacionais
+            </Link>
+          </div>
+        </div>
+
+        {/* Actions Section */}
+        <div className="actions-section">
+          <Link 
+            to="/about" 
+            className={`action-btn about-btn ${isActive('/about') ? 'action-active' : ''}`}
+          >
+            <span className="action-icon">ℹ️</span>
+            <span className="action-text">Sobre Nós</span>
+          </Link>
+          
+          <Link 
+            to="/favorites" 
+            className={`action-btn favorites-btn ${isActive('/favorites') ? 'action-active' : ''}`}
+          >
+            <span className="action-icon">❤️</span>
+            <span className="action-text">Favoritos</span>
+          </Link>
+          
+          <Link 
+            to="/cart" 
+            className={`action-btn cart-btn ${isActive('/cart') ? 'action-active' : ''}`}
+          >
+            <span className="action-icon">🛒</span>
+            <span className="action-text">Carrinho</span>
+            {user && cartCount > 0 && (
+              <span className="cart-badge">{cartCount}</span>
+            )}
+          </Link>
+          
+          {!user ? (
+            <Link to="/login" className="login-btn-modern">
+              <span className="login-icon">👤</span>
+              <span className="login-text">Entrar</span>
+            </Link>
+          ) : (
           <div className="user-menu-container" ref={userMenuRef}>
             <div 
               className="user-menu"
@@ -77,6 +153,7 @@ export default function Header(){
             )}
           </div>
         )}
+        </div>
       </div>
     </header>
   )

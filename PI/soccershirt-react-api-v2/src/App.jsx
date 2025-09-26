@@ -1,6 +1,7 @@
 import React from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Header from './components/Header.jsx'
+import Footer from './components/Footer.jsx'
 import AuthProvider, { useAuth } from './contexts/AuthContext.jsx'
 import CartProvider from './contexts/CartContext.jsx'
 import Home from './pages/Home.jsx'
@@ -45,6 +46,7 @@ function AppContent() {
           <Route path="*" element={<Navigate to="/"/>}/>
         </Routes>
       </div>
+      <Footer/>
     </>
   )
 }

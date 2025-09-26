@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { api } from '../api/client'
 import { useAuth } from '../contexts/AuthContext'
 import { useCart } from '../contexts/CartContext'
 export default function Home(){
   const { user } = useAuth()
   const { addToCart } = useCart()
+  const [searchParams] = useSearchParams()
   const [prods,setProds]=useState([])
   const [page,setPage]=useState(0)
   const [totalPages,setTotalPages]=useState(0)
   const [cats,setCats]=useState([])
-  const [category,setCategory]=useState('')
+  const [category,setCategory]=useState(searchParams.get('category') || '')
   const [sort,setSort]=useState('relevance')
+  const [selectedSizes, setSelectedSizes] = useState({})
   useEffect(()=>{ api.categories().then(setCats) },[])
   useEffect(()=>{ api.products({category, sort, page, size:8}).then(p=>{ setProds(p.content); setTotalPages(p.totalPages) })},[category,sort,page])
+  
+  // Atualizar categoria quando URL mudar
+  useEffect(() => {
+    const urlCategory = searchParams.get('category') || ''
+    setCategory(urlCategory)
+    setPage(0)
+  }, [searchParams])
   
   const addToFavorites = async (productId) => {
     try {
@@ -25,10 +34,29 @@ export default function Home(){
     }
   }
 
+  const handleSizeSelection = (productId, size) => {
+    setSelectedSizes(prev => ({
+      ...prev,
+      [productId]: size
+    }))
+  }
+
   const handleAddToCart = async (productId) => {
-    const success = await addToCart(productId)
+    const selectedSize = selectedSizes[productId]
+    
+    if (!selectedSize) {
+      alert('Por favor, selecione um tamanho antes de adicionar ao carrinho!')
+      return
+    }
+    
+    const success = await addToCart(productId, selectedSize)
     if (success) {
-      alert('Produto adicionado ao carrinho! 🛒')
+      alert(`Produto adicionado ao carrinho! 🛒\nTamanho: ${selectedSize}`)
+      // Limpar seleção após adicionar
+      setSelectedSizes(prev => ({
+        ...prev,
+        [productId]: null
+      }))
     } else {
       alert('Erro ao adicionar produto ao carrinho')
     }
@@ -108,6 +136,27 @@ export default function Home(){
               <div className="product-price">
                 <span className="current-price">R$ {Number(p.price).toFixed(2)}</span>
                 <span className="old-price">R$ {Number(p.oldPrice).toFixed(2)}</span>
+                {p.oldPrice && p.price && (
+                  <span className="discount-badge">
+                    -{Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100)}%
+                  </span>
+                )}
+              </div>
+              
+              {/* Tamanhos disponíveis */}
+              <div className="product-sizes">
+                <span className="sizes-label">Tamanhos:</span>
+                <div className="sizes-options">
+                  {['P', 'M', 'G', 'GG'].map(size => (
+                    <button
+                      key={size}
+                      className={`size-option ${selectedSizes[p.id] === size ? 'size-selected' : ''}`}
+                      onClick={() => handleSizeSelection(p.id, size)}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
               
               {user ? (
@@ -115,14 +164,21 @@ export default function Home(){
                   className="add-to-cart-btn" 
                   onClick={() => handleAddToCart(p.id)}
                 >
-                  🛒 Adicionar ao Carrinho
+                  🛒 Comprar Agora
                 </button>
               ) : (
-                <Link to="/login" className="login-to-buy">Entre para comprar</Link>
+                <Link to="/login" className="login-to-buy">
+                  🛒 Comprar Agora
+                </Link>
               )}
             </div>
           </div>
         ))}
+      </div>
+      
+      {/* Subfrase descritiva */}
+      <div className="products-subtitle">
+        <p>Encontre camisas oficiais e retrôs de clubes nacionais e internacionais</p>
       </div>
       
       <div className="pagination">
