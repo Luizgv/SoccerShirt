@@ -162,7 +162,7 @@ export default function Header(){
               <span className="action-icon">❤️</span>
               <span className="action-text">Favoritos</span>
               {user && favoritesCount > 0 && (
-                <span className="favorites-badge">{favoritesCount}</span>
+                <span className="favorites-badge"></span>
               )}
             </button>
             
@@ -254,7 +254,7 @@ export default function Header(){
             <span className="action-icon">🛒</span>
             <span className="action-text">Carrinho</span>
           {user && cartCount > 0 && (
-            <span className="cart-badge">{cartCount}</span>
+            <span className="cart-badge"></span>
           )}
         </Link>
           

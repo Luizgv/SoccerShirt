@@ -304,22 +304,18 @@ body {
 
 .cart-badge {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: -2px;
+  right: -2px;
   background: var(--error-red);
-  color: var(--white);
+  color: transparent;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1;
-  min-width: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  width: 8px;
+  height: 8px;
+  display: block;
   animation: cartBadgeAppear 0.3s ease-out;
+  font-size: 0;
+  text-indent: -9999px;
+  overflow: hidden;
 }
 
 @keyframes cartBadgeAppear {
@@ -1016,9 +1012,16 @@ body {
   color: var(--text-secondary) !important;
 }
 
-/* Product price and details in dark mode */
-.dark-mode .product-price {
+/* Product price container no dark mode */
+body.dark-mode .product-price {
   color: var(--text-primary);
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 12px !important;
+  width: 100% !important;
+  min-height: 24px !important;
 }
 
 .dark-mode .product-price .current-price {
@@ -1067,6 +1070,43 @@ body {
   color: var(--text-secondary) !important;
 }
 
+/* CORREÇÃO TOTAL PARA VISIBILIDADE NO DARK MODE */
+body.dark-mode .product-name,
+body.dark-mode .product-card .product-name,
+body.dark-mode .product-info .product-name {
+  color: #f0f6fc !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+body.dark-mode .current-price,
+body.dark-mode .product-price .current-price,
+body.dark-mode .product-card .current-price {
+  color: #f0f6fc !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+}
+
+body.dark-mode .old-price,
+body.dark-mode .product-price .old-price,
+body.dark-mode .product-card .old-price {
+  color: #8b949e !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+}
+
+/* Regras antigas removidas - agora usamos body.dark-mode para maior especificidade */
+
 /* CORREÇÃO ESPECÍFICA APENAS PARA FAVORITOS */
 .dark-mode .favorite-card .favorite-name {
   color: #000000 !important;
@@ -1106,21 +1146,18 @@ body {
 
 .favorites-badge {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  background: linear-gradient(135deg, #e91e63, #c2185b);
-  color: white;
+  top: -2px;
+  right: -2px;
+  background: #e91e63;
+  color: transparent;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  font-size: 10px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--card-bg);
-  box-shadow: 0 2px 8px rgba(233, 30, 99, 0.3);
+  width: 8px;
+  height: 8px;
+  display: block;
   animation: pulse 2s infinite;
+  font-size: 0;
+  text-indent: -9999px;
+  overflow: hidden;
 }
 
 @keyframes pulse {
@@ -1586,6 +1623,12 @@ body {
   white-space: nowrap;
 }
 
+/* Correção do nome do usuário no dark mode */
+body.dark-mode .user-name,
+.dark-mode .user-name {
+  color: var(--text-primary) !important;
+}
+
 .logout-btn {
   background: var(--error-red);
   color: var(--white);
@@ -1702,6 +1745,40 @@ body {
   font-weight: 600;
   color: var(--black);
   margin-bottom: 2px;
+}
+
+/* Correção do nome grande do usuário no dark mode */
+body.dark-mode .user-name-large,
+.dark-mode .user-name-large {
+  color: var(--text-primary) !important;
+}
+
+/* Badges no dark mode - bolinhas visíveis */
+body.dark-mode .cart-badge,
+.dark-mode .cart-badge {
+  background: #ff6b6b !important;
+}
+
+body.dark-mode .favorites-badge,
+.dark-mode .favorites-badge {
+  background: #ff6b9d !important;
+}
+
+/* FORÇA TOTAL - Garantir que badges sejam apenas bolinhas */
+.cart-badge,
+.favorites-badge {
+  font-size: 0 !important;
+  text-indent: -9999px !important;
+  overflow: hidden !important;
+  color: transparent !important;
+}
+
+.cart-badge::before,
+.cart-badge::after,
+.favorites-badge::before,
+.favorites-badge::after {
+  display: none !important;
+  content: none !important;
 }
 
 .user-email {
@@ -2174,11 +2251,37 @@ body:has(.register-container) {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 .add-to-cart-btn:hover {
   background: #333;
+}
+
+/* FORÇA MÁXIMA - Botão branco com fonte preta no dark mode */
+body.dark-mode .add-to-cart-btn,
+body.dark-mode .product-card .add-to-cart-btn,
+body.dark-mode .product-info .add-to-cart-btn,
+.dark-mode .add-to-cart-btn,
+.dark-mode .product-card .add-to-cart-btn,
+.dark-mode .product-info .add-to-cart-btn {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+body.dark-mode .add-to-cart-btn:hover,
+body.dark-mode .product-card .add-to-cart-btn:hover,
+body.dark-mode .product-info .add-to-cart-btn:hover,
+.dark-mode .add-to-cart-btn:hover,
+.dark-mode .product-card .add-to-cart-btn:hover,
+.dark-mode .product-info .add-to-cart-btn:hover {
+  background-color: #f0f0f0 !important;
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+  border-color: #f0f0f0 !important;
 }
 
 .login-to-buy {
@@ -2196,6 +2299,33 @@ body:has(.register-container) {
 .login-to-buy:hover {
   background: var(--light-gray);
   color: var(--primary-color);
+}
+
+/* FORÇA MÁXIMA - Login-to-buy branco com fonte preta no dark mode */
+body.dark-mode .login-to-buy,
+body.dark-mode .product-card .login-to-buy,
+body.dark-mode .product-info .login-to-buy,
+.dark-mode .login-to-buy,
+.dark-mode .product-card .login-to-buy,
+.dark-mode .product-info .login-to-buy {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+  border-color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+body.dark-mode .login-to-buy:hover,
+body.dark-mode .product-card .login-to-buy:hover,
+body.dark-mode .product-info .login-to-buy:hover,
+.dark-mode .login-to-buy:hover,
+.dark-mode .product-card .login-to-buy:hover,
+.dark-mode .product-info .login-to-buy:hover {
+  background-color: #f0f0f0 !important;
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+  border-color: #f0f0f0 !important;
 }
 
 .pagination {
@@ -3178,6 +3308,50 @@ body:has(.register-container) {
     padding: 6px 8px;
     gap: 8px;
   }
+}
+
+/* ========================================
+   FORÇA FINAL - BOTÕES BRANCOS NO DARK MODE
+   ======================================== */
+html body.dark-mode .add-to-cart-btn,
+html body.dark-mode button.add-to-cart-btn,
+html .dark-mode .add-to-cart-btn,
+html .dark-mode button.add-to-cart-btn {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+}
+
+html body.dark-mode .add-to-cart-btn:hover,
+html body.dark-mode button.add-to-cart-btn:hover,
+html .dark-mode .add-to-cart-btn:hover,
+html .dark-mode button.add-to-cart-btn:hover {
+  background-color: #f0f0f0 !important;
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+  border-color: #f0f0f0 !important;
+}
+
+html body.dark-mode .login-to-buy,
+html body.dark-mode a.login-to-buy,
+html .dark-mode .login-to-buy,
+html .dark-mode a.login-to-buy {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+  text-decoration: none !important;
+}
+
+html body.dark-mode .login-to-buy:hover,
+html body.dark-mode a.login-to-buy:hover,
+html .dark-mode .login-to-buy:hover,
+html .dark-mode a.login-to-buy:hover {
+  background-color: #f0f0f0 !important;
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+  border-color: #f0f0f0 !important;
 }
 
 @media (max-width: 480px) {
