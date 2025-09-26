@@ -3,9 +3,11 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { api } from '../api/client'
 import { useAuth } from '../contexts/AuthContext'
 import { useCart } from '../contexts/CartContext'
+import { useFavorites } from '../contexts/FavoritesContext'
 export default function Home(){
   const { user } = useAuth()
   const { addToCart } = useCart()
+  const { toggleFavorite } = useFavorites()
   const [searchParams] = useSearchParams()
   const [prods,setProds]=useState([])
   const [page,setPage]=useState(0)
@@ -26,7 +28,7 @@ export default function Home(){
   
   const addToFavorites = async (productId) => {
     try {
-      await api.favToggle(productId)
+      await toggleFavorite(productId)
       alert('Produto adicionado aos favoritos! ❤️')
     } catch (error) {
       console.error('Erro ao favoritar:', error)

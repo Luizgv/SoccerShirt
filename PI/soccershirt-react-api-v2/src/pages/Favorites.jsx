@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { api } from '../api/client'
 import { useCart } from '../contexts/CartContext'
+import { useFavorites } from '../contexts/FavoritesContext'
 export default function Favorites(){
-  const [items,setItems]=useState([])
   const { addToCart } = useCart()
+  const { favorites: items, toggleFavorite } = useFavorites()
   const [selectedSizes, setSelectedSizes] = useState({})
-  
-  const refresh = () => api.favList().then(setItems)
-  useEffect(refresh,[])
   
   const removeFromFavorites = async (productId) => {
     try {
-      await api.favToggle(productId)
-      refresh()
+      await toggleFavorite(productId)
     } catch (error) {
       console.error('Erro ao remover dos favoritos:', error)
     }

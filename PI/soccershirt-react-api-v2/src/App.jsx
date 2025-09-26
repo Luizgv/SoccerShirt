@@ -4,6 +4,8 @@ import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import AuthProvider, { useAuth } from './contexts/AuthContext.jsx'
 import CartProvider from './contexts/CartContext.jsx'
+import { ThemeProvider } from './contexts/ThemeContext.jsx'
+import { FavoritesProvider } from './contexts/FavoritesContext.jsx'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
@@ -53,10 +55,14 @@ function AppContent() {
 
 export default function App(){
   return (
-    <AuthProvider>
-      <CartProvider>
-        <AppContent />
-      </CartProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <FavoritesProvider>
+          <CartProvider>
+            <AppContent />
+          </CartProvider>
+        </FavoritesProvider>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }

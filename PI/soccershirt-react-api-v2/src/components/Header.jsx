@@ -2,13 +2,20 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useCart } from '../contexts/CartContext'
+import { useTheme } from '../contexts/ThemeContext'
+import { useFavorites } from '../contexts/FavoritesContext'
 export default function Header(){
   const { user, logout } = useAuth()
-  const { cartCount } = useCart()
+  const { cartCount, addToCart } = useCart()
+  const { isDarkMode, toggleTheme } = useTheme()
+  const { favorites, toggleFavorite, favoritesCount } = useFavorites()
   const nav = useNavigate()
   const location = useLocation()
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const [showFavoritesDropdown, setShowFavoritesDropdown] = useState(false)
+  const [selectedSizes, setSelectedSizes] = useState({})
   const userMenuRef = useRef(null)
+  const favoritesRef = useRef(null)
 
   // Função para verificar se uma rota está ativa
   const isActive = (path) => {
@@ -24,11 +31,15 @@ export default function Header(){
     return location.pathname === '/' && urlParams.get('category') === category
   }
 
-  // Fechar dropdown ao clicar fora
+
+  // Fechar dropdowns ao clicar fora
   useEffect(() => {
     function handleClickOutside(event) {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
         setShowUserMenu(false)
+      }
+      if (favoritesRef.current && !favoritesRef.current.contains(event.target)) {
+        setShowFavoritesDropdown(false)
       }
     }
 
@@ -37,6 +48,41 @@ export default function Header(){
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+
+  const removeFromFavorites = async (productId) => {
+    try {
+      await toggleFavorite(productId)
+    } catch (error) {
+      console.error('Erro ao remover dos favoritos:', error)
+    }
+  }
+
+  const handleSizeSelection = (productId, size) => {
+    setSelectedSizes(prev => ({
+      ...prev,
+      [productId]: size
+    }))
+  }
+
+  const handleAddToCart = async (productId) => {
+    const selectedSize = selectedSizes[productId]
+    
+    if (!selectedSize) {
+      alert('Por favor, selecione um tamanho antes de adicionar ao carrinho!')
+      return
+    }
+    
+    const success = await addToCart(productId, selectedSize)
+    if (success) {
+      alert(`Produto adicionado ao carrinho! 🛒\nTamanho: ${selectedSize}`)
+      setSelectedSizes(prev => ({
+        ...prev,
+        [productId]: null
+      }))
+    } else {
+      alert('Erro ao adicionar produto ao carrinho')
+    }
+  }
   return (
     <header className="modern-header">
       <div className="header-container">
@@ -81,6 +127,23 @@ export default function Header(){
 
         {/* Actions Section */}
         <div className="actions-section">
+          {/* Theme Toggle */}
+          <button 
+            onClick={toggleTheme}
+            className="theme-toggle-btn"
+            aria-label={`Mudar para modo ${isDarkMode ? 'claro' : 'escuro'}`}
+          >
+            <div className="theme-toggle-container">
+              <div className={`theme-toggle-track ${isDarkMode ? 'dark' : 'light'}`}>
+                <div className="theme-toggle-thumb">
+                  <span className="theme-icon">
+                    {isDarkMode ? '☀' : '☾'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </button>
+
           <Link 
             to="/about" 
             className={`action-btn about-btn ${isActive('/about') ? 'action-active' : ''}`}
@@ -89,13 +152,100 @@ export default function Header(){
             <span className="action-text">Sobre Nós</span>
           </Link>
           
-          <Link 
-            to="/favorites" 
-            className={`action-btn favorites-btn ${isActive('/favorites') ? 'action-active' : ''}`}
-          >
-            <span className="action-icon">❤️</span>
-            <span className="action-text">Favoritos</span>
-          </Link>
+          {/* Favorites Dropdown */}
+          <div className="favorites-dropdown-container" ref={favoritesRef}>
+            <button 
+              className={`action-btn favorites-btn ${showFavoritesDropdown ? 'action-active' : ''}`}
+              onClick={() => setShowFavoritesDropdown(!showFavoritesDropdown)}
+              disabled={!user}
+            >
+              <span className="action-icon">❤️</span>
+              <span className="action-text">Favoritos</span>
+              {user && favoritesCount > 0 && (
+                <span className="favorites-badge">{favoritesCount}</span>
+              )}
+            </button>
+            
+            {showFavoritesDropdown && user && (
+              <div className="favorites-dropdown">
+                <div className="favorites-dropdown-header">
+                  <h3>Meus Favoritos</h3>
+                  {favoritesCount > 0 && (
+                    <span className="favorites-count">{favoritesCount} {favoritesCount === 1 ? 'item' : 'itens'}</span>
+                  )}
+                </div>
+                
+                {favorites.length === 0 ? (
+                  <div className="empty-favorites-dropdown">
+                    <div className="empty-message">
+                      <span className="empty-icon">💔</span>
+                      <p>Nenhum favorito ainda</p>
+                      <small>Adicione produtos aos favoritos para vê-los aqui</small>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="favorites-dropdown-content">
+                    {favorites.slice(0, 3).map(product => (
+                      <div key={product.id} className="favorite-dropdown-item">
+                        <div className="favorite-item-image">
+                          <img src={product.imageUrl} alt={product.name} />
+                        </div>
+                        <div className="favorite-item-info">
+                          <div className="favorite-item-name">{product.name}</div>
+                          <div className="favorite-item-team">Camisa {product.team}</div>
+                          <div className="favorite-item-price">
+                            <span className="current-price">R$ {Number(product.price).toFixed(2)}</span>
+                            {product.oldPrice && (
+                              <span className="old-price">R$ {Number(product.oldPrice).toFixed(2)}</span>
+                            )}
+                          </div>
+                          
+                          <div className="favorite-item-sizes">
+                            {['P', 'M', 'G', 'GG'].map(size => (
+                              <button
+                                key={size}
+                                className={`size-btn ${selectedSizes[product.id] === size ? 'selected' : ''}`}
+                                onClick={() => handleSizeSelection(product.id, size)}
+                              >
+                                {size}
+                              </button>
+                            ))}
+                          </div>
+                          
+                          <div className="favorite-item-actions">
+                            <button 
+                              className="add-to-cart-mini"
+                              onClick={() => handleAddToCart(product.id)}
+                            >
+                              🛒
+                            </button>
+                            <button 
+                              className="remove-favorite-mini"
+                              onClick={() => removeFromFavorites(product.id)}
+                            >
+                              🗑️
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    
+                    {favoritesCount > 3 && (
+                      <div className="favorites-see-all">
+                        <Link 
+                          to="/favorites" 
+                          onClick={() => setShowFavoritesDropdown(false)}
+                          className="see-all-btn"
+                        >
+                          Ver todos os {favoritesCount} favoritos →
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
           
           <Link 
             to="/cart" 
@@ -103,17 +253,17 @@ export default function Header(){
           >
             <span className="action-icon">🛒</span>
             <span className="action-text">Carrinho</span>
-            {user && cartCount > 0 && (
-              <span className="cart-badge">{cartCount}</span>
-            )}
-          </Link>
+          {user && cartCount > 0 && (
+            <span className="cart-badge">{cartCount}</span>
+          )}
+        </Link>
           
-          {!user ? (
+        {!user ? (
             <Link to="/login" className="login-btn-modern">
               <span className="login-icon">👤</span>
               <span className="login-text">Entrar</span>
             </Link>
-          ) : (
+        ) : (
           <div className="user-menu-container" ref={userMenuRef}>
             <div 
               className="user-menu"
