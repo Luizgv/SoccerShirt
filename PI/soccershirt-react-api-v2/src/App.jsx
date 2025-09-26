@@ -10,6 +10,7 @@ import Product from './pages/Product.jsx'
 import Favorites from './pages/Favorites.jsx'
 import Cart from './pages/Cart.jsx'
 import Success from './pages/Success.jsx'
+import About from './pages/About.jsx'
 function RequireAuth({children}){
   const { user } = useAuth()
   const loc = useLocation()
@@ -34,6 +35,7 @@ function AppContent() {
       <div className="container">
         <Routes>
           <Route path="/" element={<Home/>}/>
+          <Route path="/about" element={<About/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path="/products/:id" element={<Product/>}/>

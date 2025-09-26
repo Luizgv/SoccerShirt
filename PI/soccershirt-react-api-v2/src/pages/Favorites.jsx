@@ -36,6 +36,9 @@ export default function Favorites(){
           <div className="empty-favorites-message">
             Você ainda não tem nenhum produto favoritado!
           </div>
+          <Link to="/" className="cta-button">
+            Explorar Produtos
+          </Link>
         </div>
       ) : (
         <div className="favorites-grid">

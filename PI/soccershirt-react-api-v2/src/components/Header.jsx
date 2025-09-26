@@ -27,6 +27,7 @@ export default function Header(){
       <Link to="/" style={{fontWeight:800, fontSize:22}}>Soccer Shirt</Link>
       <input placeholder="Pesquise Produtos" className="search-bar" />
       <div className="topbar-icons">
+        <Link to="/about" className="header-link">Sobre Nós</Link>
         <Link to="/favorites" className="header-link">♡</Link>
         <Link to="/cart" className="header-link cart-icon">
           🛒
