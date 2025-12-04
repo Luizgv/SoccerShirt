@@ -22,7 +22,7 @@ echo ✅ Verificando versões...
 java -version
 mvn -version
 
-REM Navegar para o diretório raiz
+REM Navegar para o diretório raiz do projeto
 cd /d "%~dp0\.."
 
 echo 🔨 Compilando o projeto...
