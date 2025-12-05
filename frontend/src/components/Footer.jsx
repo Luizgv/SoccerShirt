@@ -51,10 +51,10 @@ export default function Footer() {
             <div className="footer-payments">
               <span>Pagamento:</span>
               <div className="payment-icons">
-                <span title="Visa">💳</span>
-                <span title="Mastercard">💳</span>
-                <span title="PIX">📱</span>
-                <span title="Boleto">🧾</span>
+                <span title="Visa">VISA</span>
+                <span title="Mastercard">MASTER</span>
+                <span title="PIX">PIX</span>
+                <span title="Boleto">BOL</span>
               </div>
             </div>
           </div>

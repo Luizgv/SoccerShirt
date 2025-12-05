@@ -32,7 +32,7 @@ export default function Favorites(){
     
     const success = await addToCart(productId, selectedSize)
     if (success) {
-      alert(`Produto adicionado ao carrinho! 🛒\nTamanho: ${selectedSize}`)
+      alert(`Produto adicionado ao carrinho!\nTamanho: ${selectedSize}`)
       // Limpar seleção após adicionar
       setSelectedSizes(prev => ({
         ...prev,
@@ -69,14 +69,14 @@ export default function Favorites(){
                   onClick={() => removeFromFavorites(product.id)}
                   aria-label="Remover dos favoritos"
                 >
-                  ❤️
+                  ×
                 </button>
               </div>
               
               <div className="favorite-info">
                 <div className="favorite-category">Camisa {product.team}</div>
                 <div className="favorite-name">{product.name}</div>
-                <div className="favorite-rating">★★★★★ (198 Avaliações)</div>
+                <div className="favorite-rating">5.0 (198 Avaliações)</div>
                 <div className="favorite-price">
                   <span className="favorite-current-price">R$ {Number(product.price).toFixed(2)}</span>
                   <span className="favorite-old-price">R$ {Number(product.oldPrice).toFixed(2)}</span>
@@ -107,7 +107,7 @@ export default function Favorites(){
                   className="add-to-cart-from-favorites" 
                   onClick={() => handleAddToCart(product.id)}
                 >
-                  🛒 Comprar Agora
+                  Comprar Agora
                 </button>
               </div>
             </div>

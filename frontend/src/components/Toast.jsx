@@ -13,9 +13,9 @@ export default function Toast({ message, description, type = 'success', onClose,
   }, [duration, onClose])
 
   const icons = {
-    success: '✅',
-    error: '❌',
-    warning: '⚠️'
+    success: '✓',
+    error: '×',
+    warning: '!'
   }
 
   return (

@@ -1,9 +1,16 @@
+// ============================================
+// CARTCONTEXT - Gerenciamento do Carrinho
+// Context API + useState + useEffect
+// Depende de: AuthContext (usuário logado)
+// ============================================
+
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { api } from '../api/client'
 import { useAuth } from './AuthContext'
 
 const CartContext = createContext()
 
+// Hook customizado: const { cartCount, addToCart } = useCart()
 export function useCart() {
   const context = useContext(CartContext)
   if (!context) {
@@ -13,12 +20,13 @@ export function useCart() {
 }
 
 export default function CartProvider({ children }) {
+  // Estados: cartItems (lista), cartCount (badge no Header)
   const [cartItems, setCartItems] = useState([])
   const [cartCount, setCartCount] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const { user } = useAuth()
 
-  // Função para atualizar o carrinho
+  // Sincronizar com backend (busca lista e recalcula contador)
   const refreshCart = async () => {
     if (!user) {
       setCartItems([])
@@ -41,13 +49,19 @@ export default function CartProvider({ children }) {
     }
   }
 
-  // Função para adicionar item ao carrinho
+  // ============================================
+  // FUNÇÃO: addToCart
+  // 1. Valida se usuário está logado
+  // 2. POST /api/cart/add/{id} (adiciona no backend)
+  // 3. refreshCart() (atualiza contador)
+  // 4. Retorna true/false (componente mostra toast)
+  // ============================================
   const addToCart = async (productId) => {
     if (!user) return false
     
     try {
       await api.cartAdd(productId)
-      await refreshCart() // Atualiza o contador
+      await refreshCart() // Atualiza badge no Header
       return true
     } catch (error) {
       console.error('Erro ao adicionar ao carrinho:', error)
@@ -55,13 +69,13 @@ export default function CartProvider({ children }) {
     }
   }
 
-  // Função para remover item do carrinho
+  // Remove item do carrinho
   const removeFromCart = async (itemId) => {
     if (!user) return false
     
     try {
       await api.cartRemove(itemId)
-      await refreshCart() // Atualiza o contador
+      await refreshCart()
       return true
     } catch (error) {
       console.error('Erro ao remover do carrinho:', error)
@@ -69,13 +83,13 @@ export default function CartProvider({ children }) {
     }
   }
 
-  // Função para atualizar quantidade
+  // Atualiza quantidade de um item
   const updateQuantity = async (itemId, quantity) => {
     if (!user) return false
     
     try {
       await api.cartQty(itemId, quantity)
-      await refreshCart() // Atualiza o contador
+      await refreshCart()
       return true
     } catch (error) {
       console.error('Erro ao atualizar quantidade:', error)
@@ -83,7 +97,7 @@ export default function CartProvider({ children }) {
     }
   }
 
-  // Carrega o carrinho quando o usuário faz login
+  // Monitora login/logout (user do AuthContext)
   useEffect(() => {
     refreshCart()
   }, [user])

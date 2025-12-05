@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
 export const getToken = () => localStorage.getItem('ss_token')
 export const setToken = (t) => localStorage.setItem('ss_token', t || '')
 async function req(path, opts={}){

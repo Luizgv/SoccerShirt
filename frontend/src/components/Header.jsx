@@ -74,7 +74,7 @@ export default function Header(){
     
     const success = await addToCart(productId, selectedSize)
     if (success) {
-      alert(`Produto adicionado ao carrinho! 🛒\nTamanho: ${selectedSize}`)
+      alert(`Produto adicionado ao carrinho!\nTamanho: ${selectedSize}`)
       setSelectedSizes(prev => ({
         ...prev,
         [productId]: null
@@ -89,7 +89,7 @@ export default function Header(){
         {/* Logo Section */}
         <div className="logo-section">
           <Link to="/" className="logo-link">
-            <div className="logo-icon">⚽</div>
+            <div className="logo-icon">●</div>
             <span className="logo-text">Soccer Shirt</span>
           </Link>
         </div>
@@ -97,7 +97,7 @@ export default function Header(){
         {/* Search Section */}
         <div className="search-section">
           <div className="search-container">
-            <div className="search-icon">🔍</div>
+            <div className="search-icon">⌕</div>
             <input 
               placeholder="Pesquise por times, produtos..." 
               className="search-input" 
@@ -112,14 +112,14 @@ export default function Header(){
               to="/?category=Nacional" 
               className={`category-btn ${isCategoryActive('Nacional') ? 'category-active' : ''}`}
             >
-              <span className="category-icon">🇧🇷</span>
+              <span className="category-icon">BR</span>
               Nacionais
             </Link>
             <Link 
               to="/?category=Internacional" 
               className={`category-btn ${isCategoryActive('Internacional') ? 'category-active' : ''}`}
             >
-              <span className="category-icon">🌍</span>
+              <span className="category-icon">INT</span>
               Internacionais
             </Link>
           </div>
@@ -137,7 +137,7 @@ export default function Header(){
               <div className={`theme-toggle-track ${isDarkMode ? 'dark' : 'light'}`}>
                 <div className="theme-toggle-thumb">
                   <span className="theme-icon">
-                    {isDarkMode ? '☀' : '☾'}
+                    {isDarkMode ? '○' : '●'}
                   </span>
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function Header(){
             to="/about" 
             className={`action-btn about-btn ${isActive('/about') ? 'action-active' : ''}`}
           >
-            <span className="action-icon">ℹ️</span>
+            <span className="action-icon">i</span>
             <span className="action-text">Sobre Nós</span>
           </Link>
           
@@ -159,7 +159,7 @@ export default function Header(){
               onClick={() => setShowFavoritesDropdown(!showFavoritesDropdown)}
               disabled={!user}
             >
-              <span className="action-icon">❤️</span>
+              <span className="action-icon">♡</span>
               <span className="action-text">Favoritos</span>
               {user && favoritesCount > 0 && (
                 <span className="favorites-badge"></span>
@@ -178,7 +178,7 @@ export default function Header(){
                 {favorites.length === 0 ? (
                   <div className="empty-favorites-dropdown">
                     <div className="empty-message">
-                      <span className="empty-icon">💔</span>
+                      <span className="empty-icon">○</span>
                       <p>Nenhum favorito ainda</p>
                       <small>Adicione produtos aos favoritos para vê-los aqui</small>
                     </div>
@@ -217,13 +217,13 @@ export default function Header(){
                               className="add-to-cart-mini"
                               onClick={() => handleAddToCart(product.id)}
                             >
-                              🛒
+                              +
                             </button>
                             <button 
                               className="remove-favorite-mini"
                               onClick={() => removeFromFavorites(product.id)}
                             >
-                              🗑️
+                              ×
                             </button>
                           </div>
                         </div>
@@ -273,7 +273,7 @@ export default function Header(){
                 <span className="user-avatar">👤</span>
                 <span className="user-name">{user.fullName}</span>
               </div>
-              <span className="dropdown-arrow">▼</span>
+              <span className="dropdown-arrow">▾</span>
             </div>
             
             {showUserMenu && (
@@ -296,7 +296,7 @@ export default function Header(){
                     setShowUserMenu(false);
                   }}
                 >
-                  <span>🚪</span>
+                  <span>→</span>
                   Sair da conta
                 </button>
               </div>

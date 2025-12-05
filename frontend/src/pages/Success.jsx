@@ -12,7 +12,7 @@ export default function Success(){
   return (
     <div className="success-page">
       <div className="success-content">
-        <div className="success-icon">✅</div>
+        <div className="success-icon">✓</div>
         <h1 className="success-title">Compra Finalizada com Sucesso!</h1>
         <p className="success-message">
           Seu pedido foi confirmado e está sendo processado.

@@ -15,7 +15,7 @@ export default function Product(){
   const handleAddToCart = async () => {
     const success = await addToCart(p.id)
     if (success) {
-      alert('Produto adicionado ao carrinho! 🛒')
+      alert('Produto adicionado ao carrinho!')
     } else {
       alert('Erro ao adicionar produto ao carrinho')
     }
@@ -37,7 +37,7 @@ export default function Product(){
         <div className="product-info-section">
           <div className="product-category-detail">Tema</div>
           <h1 className="product-title">{p.name}</h1>
-          <div className="product-rating-detail">★★★★★ (158 Avaliações)</div>
+          <div className="product-rating-detail">5.0 (158 Avaliações)</div>
           
           <div className="product-pricing">
             <span className="current-price-detail">R$ {Number(p.price).toFixed(2)}</span>

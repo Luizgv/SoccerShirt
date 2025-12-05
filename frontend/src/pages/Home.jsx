@@ -29,7 +29,7 @@ export default function Home(){
   const addToFavorites = async (productId) => {
     try {
       await toggleFavorite(productId)
-      alert('Produto adicionado aos favoritos! ❤️')
+      alert('Produto adicionado aos favoritos!')
     } catch (error) {
       console.error('Erro ao favoritar:', error)
       alert('Erro ao adicionar aos favoritos. Tente novamente.')
@@ -53,7 +53,7 @@ export default function Home(){
     
     const success = await addToCart(productId, selectedSize)
     if (success) {
-      alert(`Produto adicionado ao carrinho! 🛒\nTamanho: ${selectedSize}`)
+      alert(`Produto adicionado ao carrinho!\nTamanho: ${selectedSize}`)
       // Limpar seleção após adicionar
       setSelectedSizes(prev => ({
         ...prev,
@@ -109,7 +109,7 @@ export default function Home(){
             gap: '6px'
           }}
         >
-          🗑️ Limpar filtros
+          Limpar filtros
         </button>
       </div>
       
@@ -134,7 +134,7 @@ export default function Home(){
             <div className="product-info">
               <div className="product-category">Camisa {p.team}</div>
               <div className="product-name">{p.name}</div>
-              <div className="product-rating">★★★★★ (198 Avaliações)</div>
+              <div className="product-rating">5.0 (198 Avaliações)</div>
               <div className="product-price">
                 <span className="current-price">R$ {Number(p.price).toFixed(2)}</span>
                 <span className="old-price">R$ {Number(p.oldPrice).toFixed(2)}</span>
@@ -166,11 +166,11 @@ export default function Home(){
                   className="add-to-cart-btn" 
                   onClick={() => handleAddToCart(p.id)}
                 >
-                  🛒 Comprar Agora
+                  Comprar Agora
                 </button>
               ) : (
                 <Link to="/login" className="login-to-buy">
-                  🛒 Comprar Agora
+                  Comprar Agora
                 </Link>
               )}
             </div>
