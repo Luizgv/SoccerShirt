@@ -88,7 +88,7 @@ export default function Header(){
       <div className="simple-header-container">
         {/* Logo */}
         <Link to="/" className="simple-logo">
-          LOGO
+          <img src="/images/SoccerLogo.png" alt="Logo" className="logo-image" />
         </Link>
 
         {/* Search */}
@@ -109,13 +109,13 @@ export default function Header(){
           to="/?category=Nacional" 
           className={`simple-category-link ${isCategoryActive('Nacional') ? 'active' : ''}`}
         >
-          BR Nacionais
+          Nacionais
         </Link>
         <Link 
           to="/?category=Internacional" 
           className={`simple-category-link ${isCategoryActive('Internacional') ? 'active' : ''}`}
         >
-          INT Internacionais
+          Internacionais
         </Link>
 
         {/* Theme Toggle - Simple */}
@@ -124,7 +124,10 @@ export default function Header(){
           className="simple-theme-btn"
           aria-label="Mudar tema"
         >
-          {isDarkMode ? '○' : '●'}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="10" fill="currentColor"/>
+            <path d="M12 2 A 10 10 0 0 1 12 22 Z" fill="white"/>
+          </svg>
         </button>
 
         {/* Actions */}
