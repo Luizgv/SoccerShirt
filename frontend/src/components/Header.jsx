@@ -84,225 +84,102 @@ export default function Header(){
     }
   }
   return (
-    <header className="modern-header">
-      <div className="header-container">
-        {/* Logo Section */}
-        <div className="logo-section">
-          <Link to="/" className="logo-link">
-            <div className="logo-icon">●</div>
-            <span className="logo-text">Soccer Shirt</span>
-          </Link>
-        </div>
-
-        {/* Search Section */}
-        <div className="search-section">
-          <div className="search-container">
-            <div className="search-icon">⌕</div>
-            <input 
-              placeholder="Pesquise por times, produtos..." 
-              className="search-input" 
-            />
-          </div>
-        </div>
-
-        {/* Navigation Section */}
-        <div className="nav-section">
-          <div className="category-nav">
-            <Link 
-              to="/?category=Nacional" 
-              className={`category-btn ${isCategoryActive('Nacional') ? 'category-active' : ''}`}
-            >
-              <span className="category-icon">BR</span>
-              Nacionais
-            </Link>
-            <Link 
-              to="/?category=Internacional" 
-              className={`category-btn ${isCategoryActive('Internacional') ? 'category-active' : ''}`}
-            >
-              <span className="category-icon">INT</span>
-              Internacionais
-            </Link>
-          </div>
-        </div>
-
-        {/* Actions Section */}
-        <div className="actions-section">
-          {/* Theme Toggle */}
-          <button 
-            onClick={toggleTheme}
-            className="theme-toggle-btn"
-            aria-label={`Mudar para modo ${isDarkMode ? 'claro' : 'escuro'}`}
-          >
-            <div className="theme-toggle-container">
-              <div className={`theme-toggle-track ${isDarkMode ? 'dark' : 'light'}`}>
-                <div className="theme-toggle-thumb">
-                  <span className="theme-icon">
-                    {isDarkMode ? '○' : '●'}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </button>
-
-          <Link 
-            to="/about" 
-            className={`action-btn about-btn ${isActive('/about') ? 'action-active' : ''}`}
-          >
-            <span className="action-icon">i</span>
-            <span className="action-text">Sobre Nós</span>
-          </Link>
-          
-          {/* Favorites Dropdown */}
-          <div className="favorites-dropdown-container" ref={favoritesRef}>
-            <button 
-              className={`action-btn favorites-btn ${showFavoritesDropdown ? 'action-active' : ''}`}
-              onClick={() => setShowFavoritesDropdown(!showFavoritesDropdown)}
-              disabled={!user}
-            >
-              <span className="action-icon">♡</span>
-              <span className="action-text">Favoritos</span>
-              {user && favoritesCount > 0 && (
-                <span className="favorites-badge"></span>
-              )}
-            </button>
-            
-            {showFavoritesDropdown && user && (
-              <div className="favorites-dropdown">
-                <div className="favorites-dropdown-header">
-                  <h3>Meus Favoritos</h3>
-                  {favoritesCount > 0 && (
-                    <span className="favorites-count">{favoritesCount} {favoritesCount === 1 ? 'item' : 'itens'}</span>
-                  )}
-                </div>
-                
-                {favorites.length === 0 ? (
-                  <div className="empty-favorites-dropdown">
-                    <div className="empty-message">
-                      <span className="empty-icon">○</span>
-                      <p>Nenhum favorito ainda</p>
-                      <small>Adicione produtos aos favoritos para vê-los aqui</small>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="favorites-dropdown-content">
-                    {favorites.slice(0, 3).map(product => (
-                      <div key={product.id} className="favorite-dropdown-item">
-                        <div className="favorite-item-image">
-                          <img src={product.imageUrl} alt={product.name} />
-                        </div>
-                        <div className="favorite-item-info">
-                          <div className="favorite-item-name">{product.name}</div>
-                          <div className="favorite-item-team">Camisa {product.team}</div>
-                          <div className="favorite-item-price">
-                            <span className="current-price">R$ {Number(product.price).toFixed(2)}</span>
-                            {product.oldPrice && (
-                              <span className="old-price">R$ {Number(product.oldPrice).toFixed(2)}</span>
-                            )}
-                          </div>
-                          
-                          <div className="favorite-item-sizes">
-                            {['P', 'M', 'G', 'GG'].map(size => (
-                              <button
-                                key={size}
-                                className={`size-btn ${selectedSizes[product.id] === size ? 'selected' : ''}`}
-                                onClick={() => handleSizeSelection(product.id, size)}
-                              >
-                                {size}
-                              </button>
-                            ))}
-                          </div>
-                          
-                          <div className="favorite-item-actions">
-                            <button 
-                              className="add-to-cart-mini"
-                              onClick={() => handleAddToCart(product.id)}
-                            >
-                              +
-                            </button>
-                            <button 
-                              className="remove-favorite-mini"
-                              onClick={() => removeFromFavorites(product.id)}
-                            >
-                              ×
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                    
-                    {favoritesCount > 3 && (
-                      <div className="favorites-see-all">
-                        <Link 
-                          to="/favorites" 
-                          onClick={() => setShowFavoritesDropdown(false)}
-                          className="see-all-btn"
-                        >
-                          Ver todos os {favoritesCount} favoritos →
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-          
-          <Link 
-            to="/cart" 
-            className={`action-btn cart-btn ${isActive('/cart') ? 'action-active' : ''}`}
-          >
-            <span className="action-icon">🛒</span>
-            <span className="action-text">Carrinho</span>
-          {user && cartCount > 0 && (
-            <span className="cart-badge"></span>
-          )}
+    <header className="simple-header">
+      <div className="simple-header-container">
+        {/* Logo */}
+        <Link to="/" className="simple-logo">
+          LOGO
         </Link>
+
+        {/* Search */}
+        <div className="simple-search">
+          <svg className="simple-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <input 
+            type="text"
+            placeholder="Pesquise Produtos" 
+            className="simple-search-input" 
+          />
+        </div>
+
+        {/* Categories */}
+        <Link 
+          to="/?category=Nacional" 
+          className={`simple-category-link ${isCategoryActive('Nacional') ? 'active' : ''}`}
+        >
+          BR Nacionais
+        </Link>
+        <Link 
+          to="/?category=Internacional" 
+          className={`simple-category-link ${isCategoryActive('Internacional') ? 'active' : ''}`}
+        >
+          INT Internacionais
+        </Link>
+
+        {/* Theme Toggle - Simple */}
+        <button 
+          onClick={toggleTheme}
+          className="simple-theme-btn"
+          aria-label="Mudar tema"
+        >
+          {isDarkMode ? '○' : '●'}
+        </button>
+
+        {/* Actions */}
+        <div className="simple-actions">
+          <Link to="/about" className="simple-icon-btn">
+            <svg className="simple-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          </Link>
           
-        {!user ? (
-            <Link to="/login" className="login-btn-modern">
-              <span className="login-icon">👤</span>
-              <span className="login-text">Entrar</span>
+          <Link to="/favorites" className="simple-icon-btn">
+            <svg className="simple-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </Link>
+          
+          <Link to="/cart" className="simple-icon-btn">
+            <svg className="simple-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            {cartCount > 0 && <span className="simple-badge">{cartCount}</span>}
+          </Link>
+
+          {!user ? (
+            <Link to="/login" className="simple-icon-btn">
+              <svg className="simple-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
             </Link>
-        ) : (
-          <div className="user-menu-container" ref={userMenuRef}>
-            <div 
-              className="user-menu"
-              onClick={() => setShowUserMenu(!showUserMenu)}
-            >
-              <div className="user-info">
-                <span className="user-avatar">👤</span>
-                <span className="user-name">{user.fullName}</span>
-              </div>
-              <span className="dropdown-arrow">▾</span>
-            </div>
-            
-            {showUserMenu && (
-              <div className="user-dropdown">
-                <div className="user-dropdown-header">
-                  <div className="user-full-info">
-                    <span className="user-avatar-large">👤</span>
-                    <div>
-                      <div className="user-name-large">{user.fullName}</div>
-                      <div className="user-email">{user.email}</div>
-                    </div>
-                  </div>
+          ) : (
+            <div className="simple-user-menu" ref={userMenuRef}>
+              <button 
+                className="simple-user-btn"
+                onClick={() => setShowUserMenu(!showUserMenu)}
+              >
+                <svg className="simple-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </button>
+              
+              {showUserMenu && (
+                <div className="simple-dropdown">
+                  <button onClick={() => { logout(); nav('/login'); }}>
+                    Sair
+                  </button>
                 </div>
-                <div className="user-dropdown-divider"></div>
-                <button 
-                  className="logout-btn-dropdown" 
-                  onClick={() => {
-                    logout(); 
-                    nav('/login'); 
-                    setShowUserMenu(false);
-                  }}
-                >
-                  <span>→</span>
-                  Sair da conta
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
         </div>
       </div>
     </header>

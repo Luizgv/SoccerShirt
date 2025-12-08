@@ -35,28 +35,44 @@ export default function Product(){
         </div>
         
         <div className="product-info-section">
-          <div className="product-category-detail">Tema</div>
+          <div className="product-header-detail">
+            <div className="product-category-detail">Tema</div>
+            <button className="favorite-btn-detail" aria-label="Favoritar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+          
           <h1 className="product-title">{p.name}</h1>
-          <div className="product-rating-detail">5.0 (158 Avaliações)</div>
+          <div className="product-rating-detail">
+            <span className="rating-stars">★</span>
+            <span>4.5 (1128 reviews)</span>
+          </div>
           
           <div className="product-pricing">
             <span className="current-price-detail">R$ {Number(p.price).toFixed(2)}</span>
             <span className="old-price-detail">R$ {Number(p.oldPrice).toFixed(2)}</span>
-            <span className="discount-badge">-14% OFF</span>
+            {p.oldPrice && p.price && (
+              <span className="discount-badge-detail">
+                -{Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100)}% OFF
+              </span>
+            )}
           </div>
           
           <div className="product-description">
             <h3>Descrição</h3>
             <ul>
               <li>Indicado para: Jogo</li>
-              <li>Clube: Nacional</li>
+              <li>Clube: {p.team}</li>
+              <li>Time: {p.category}</li>
               <li>Gola: Gola V</li>
               <li>Material: Poliéster</li>
             </ul>
           </div>
           
           <div className="quantity-section">
-            <label>Quantidade</label>
+            <label>Quantidade:</label>
             <div className="quantity-controls">
               <button 
                 className="quantity-btn" 
@@ -82,8 +98,8 @@ export default function Product(){
               Adicionar ao Carrinho
             </button>
           ) : (
-            <Link to="/login" className="login-to-buy-detail">
-              Entre para comprar
+            <Link to="/login" className="add-to-cart-detail-btn">
+              Adicionar ao Carrinho
             </Link>
           )}
         </div>

@@ -45,56 +45,63 @@ export default function Favorites(){
   
   return (
     <div className="favorites-container">
-      <h2 className="favorites-title">Favoritos</h2>
+      <div className="favorites-header">
+        <h2 className="favorites-title">Favoritos</h2>
+      </div>
       
       {!items.length ? (
-        <div className="empty-favorites">
-          <div className="empty-favorites-message">
-            Você ainda não tem nenhum produto favoritado!
-          </div>
-          <Link to="/" className="cta-button">
+        <div className="favorites-empty">
+          <p className="favorites-empty-message">
+            Você ainda não possui nenhum produto favoritado!
+          </p>
+          <Link to="/" className="explore-btn">
             Explorar Produtos
           </Link>
         </div>
       ) : (
         <div className="favorites-grid">
           {items.map(product => (
-            <div className="favorite-card" key={product.id}>
-              <div className="favorite-image-container">
+            <div className="product-card" key={product.id}>
+              <div className="product-image-container">
                 <Link to={`/products/${product.id}`}>
-                  <img src={product.imageUrl} alt={product.name} className="favorite-image"/>
+                  <img src={product.imageUrl} alt={product.name} className="product-image"/>
                 </Link>
                 <button 
-                  className="remove-favorite-btn" 
+                  className="favorite-btn" 
                   onClick={() => removeFromFavorites(product.id)}
                   aria-label="Remover dos favoritos"
                 >
-                  ×
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
                 </button>
               </div>
               
-              <div className="favorite-info">
-                <div className="favorite-category">Camisa {product.team}</div>
-                <div className="favorite-name">{product.name}</div>
-                <div className="favorite-rating">5.0 (198 Avaliações)</div>
-                <div className="favorite-price">
-                  <span className="favorite-current-price">R$ {Number(product.price).toFixed(2)}</span>
-                  <span className="favorite-old-price">R$ {Number(product.oldPrice).toFixed(2)}</span>
+              <div className="product-info">
+                <div className="product-category">Camisa {product.team}</div>
+                <div className="product-name">{product.name}</div>
+                <div className="product-rating">
+                  <span className="rating-stars">★</span>
+                  <span>4.5 (1128)</span>
+                </div>
+                <div className="product-price">
+                  <span className="current-price">R$ {Number(product.price).toFixed(2)}</span>
+                  <span className="old-price">R$ {Number(product.oldPrice).toFixed(2)}</span>
                   {product.oldPrice && product.price && (
-                    <span className="favorite-discount-badge">
+                    <span className="discount-badge">
                       -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
                     </span>
                   )}
                 </div>
                 
                 {/* Tamanhos disponíveis */}
-                <div className="favorite-sizes">
-                  <span className="favorite-sizes-label">Tamanhos:</span>
-                  <div className="favorite-sizes-options">
+                <div className="product-sizes">
+                  <span className="sizes-label">Tamanhos:</span>
+                  <div className="sizes-options">
                     {['P', 'M', 'G', 'GG'].map(size => (
                       <button
                         key={size}
-                        className={`favorite-size-option ${selectedSizes[product.id] === size ? 'favorite-size-selected' : ''}`}
+                        className={`size-option ${selectedSizes[product.id] === size ? 'size-selected' : ''}`}
                         onClick={() => handleSizeSelection(product.id, size)}
                       >
                         {size}
@@ -104,7 +111,7 @@ export default function Favorites(){
                 </div>
                 
                 <button 
-                  className="add-to-cart-from-favorites" 
+                  className="add-to-cart-btn" 
                   onClick={() => handleAddToCart(product.id)}
                 >
                   Comprar Agora

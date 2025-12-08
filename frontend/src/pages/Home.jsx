@@ -66,7 +66,10 @@ export default function Home(){
 
   return (
     <div className="home-container">
-      <h2 className="home-title">Todos os Produtos</h2>
+      <div className="home-header">
+        <h2 className="home-title">Todos os Produtos</h2>
+        <span className="products-count">({prods.length} produtos)</span>
+      </div>
       
       <div className="filters-container">
         <select 
