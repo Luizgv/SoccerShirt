@@ -3439,7 +3439,7 @@ body.dark-mode .product-info .login-to-buy:hover,
 .footer-logo {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--white);
+  color: #ffffff !important;
   margin-bottom: 1rem;
 }
 

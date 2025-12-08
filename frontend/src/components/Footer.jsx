@@ -46,18 +46,6 @@ export default function Footer() {
           <div className="footer-bottom-left">
             <p>&copy; 2025 Soccer Shirt. Todos os direitos reservados.</p>
           </div>
-          
-          <div className="footer-bottom-right">
-            <div className="footer-payments">
-              <span>Pagamento:</span>
-              <div className="payment-icons">
-                <span title="Visa">VISA</span>
-                <span title="Mastercard">MASTER</span>
-                <span title="PIX">PIX</span>
-                <span title="Boleto">BOL</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </footer>
